@@ -1,4 +1,4 @@
-﻿asyncssh==2.22.0
+asyncssh==2.22.0
 bcrypt==5.0.0
 blinker==1.9.0
 cffi==2.0.0
