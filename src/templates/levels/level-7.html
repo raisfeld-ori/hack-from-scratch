@@ -1,0 +1,40 @@
+<!--Congrats! You found me. The flag is "FLAG(ilovehtml)" -->
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/default.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/ciphers.css') }}"
+/>
+<div class="container">
+  <h1>Level 7</h1>
+  <h2>XOR encryption</h2>
+  <p>
+    Let's learn now about XOR encryption, which is a bit more complex than the
+    Ceasar cipher.
+    <br /><br />
+    XOR is an encryption that uses a 'logic gate' called
+  </p>
+
+  <div class="cipher-tool">
+    <label>Encrypted flag:</label>
+    <div id="encInput" class="enc-display">KQFL(ItsyXyjfqRdXjhwjy)</div>
+
+    <div class="key-controls">
+      <label for="keyNum">Key:</label>
+      <input id="keyNum" type="number" min="0" max="25" value="5" />
+      <input id="keyRange" type="range" min="0" max="25" value="5" />
+    </div>
+
+    <div class="wheel" id="wheel" aria-hidden="true"></div>
+
+    <p>Decoded: <strong id="decoded"></strong></p>
+  </div>
+
+  <form method="POST" action="{{ url_for('level-7.submit_final_flag') }}">
+    <input type="text" name="flag" placeholder="Flag" required />
+    <button type="submit">Submit flag</button>
+  </form>
+</div>

@@ -2,7 +2,7 @@ from src.levels.levels import Level
 from flask import request, redirect, make_response
 
 
-level_password = "FLAG(YourNowAnAmatuerHacker)"
+level_password = "FLAG(DontStealMySecret)"
 
 def create_level(level: Level):
     bp = level.blueprint
