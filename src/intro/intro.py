@@ -13,6 +13,11 @@ def set_levels(lvls: list[Level]):
 def index():
     return render_template("index.html")
 
+    
+@main_blueprint.route("/info")
+def info():
+    return render_template("info.html")
+
 @main_blueprint.route("/return_to_level", methods=["POST"])
 def return_to_level():
     flag = request.form.get("flag")

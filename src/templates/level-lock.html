@@ -10,6 +10,9 @@
     />
   </head>
   <body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition"></div>
+
     <div class="container">
       <h1 class="title">Flag required</h1>
       <p>Give the flag of the last level to proceed.</p>
@@ -24,5 +27,37 @@
         <button type="submit">Submit</button>
       </form>
     </div>
+
+    <script>
+      function handlePageTransition(href) {
+        const transition = document.querySelector('.page-transition');
+        transition.classList.remove('end');
+        transition.classList.add('start');
+        
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const transition = document.querySelector('.page-transition');
+        if (transition) {
+          setTimeout(() => {
+            transition.classList.add('end');
+          }, 50);
+        }
+
+        document.querySelectorAll('a').forEach(link => {
+          if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
+            link.addEventListener('click', function(e) {
+              if (!this.href.includes('#')) {
+                e.preventDefault();
+                handlePageTransition(this.href);
+              }
+            });
+          }
+        });
+      });
+    </script>
   </body>
 </html>
