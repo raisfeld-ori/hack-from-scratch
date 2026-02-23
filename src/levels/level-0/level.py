@@ -10,9 +10,9 @@ def create_level(level: Level):
     @bp.post('/submit_final')
     def submit_final_flag():
         submitted_flag = request.form.get("flag")
-        if submitted_flag == "CTF(ilovehtml)":
+        if submitted_flag == "FLAG(ilovehtml)":
             response = make_response(redirect('/level-1/'))
-            response.set_cookie("current_flag", "CTF(ilovehtml)")
+            response.set_cookie("current_flag", "FLAG(ilovehtml)")
             return response
         else:
             return render_template("levels/level-0.html", error="Incorrect flag. Try again."), 403

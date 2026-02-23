@@ -42,23 +42,19 @@
             Also, keep your flags saved somewhere — you can use them to return
             to levels even after completing them.
           </p>
-        </section>
-
-        <section class="card actions">
-          <a class="cta-button primary" href="/level-0">Start level 0</a>
-          <div class="or-line">or return to last level</div>
-          <p class="flag-help">Paste your saved flag to jump back in.</p>
-          <div class="flag-chips">
-            <span>Example:</span>
-            <span class="chip">flag{level_2}</span>
-            <span class="chip">flag{web_intro}</span>
-          </div>
-          <div class="input-row">
-            <input class="cta-input" type="text" placeholder="Level flag" />
-            <button class="cta-button secondary">Go</button>
-          </div>
-        </section>
-      </main>
+        </div>
+      </div>
+      <a class="cta-button" href="/level-0">Start level 0</a>
+      <p>Or, Return to last level:</p>
+      <form method="POST" action="{{ url_for('main.return_to_level') }}">
+        <input
+          class="cta-input"
+          type="text"
+          name="flag"
+          placeholder="Level flag"
+        />
+        <button class="cta-button">Go</button>
+      </form>
     </div>
 
     <script>
