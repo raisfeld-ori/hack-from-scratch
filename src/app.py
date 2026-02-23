@@ -1,6 +1,6 @@
 from flask import Flask
 from src.levels.levels import build_levels
-from src.intro.intro import main_blueprint
+from src.intro.intro import main_blueprint, set_levels
 from src.ssh.ssh_server import start_ssh_server_background
 from pathlib import Path
 
@@ -9,6 +9,7 @@ def build_app():
     app = Flask(__name__)
     app.register_blueprint(main_blueprint)
     levels = build_levels()
+    set_levels(levels)
     for level in levels:
         app.register_blueprint(level.blueprint)
     

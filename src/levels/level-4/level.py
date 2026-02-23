@@ -2,7 +2,7 @@ from src.levels.levels import Level
 from flask import request, redirect, make_response
 
 
-level_password = "CTF(ParameterTemperingIsCool)"
+level_password = "FLAG(ParameterTemperingIsCool)"
 
 def create_level(level: Level):
     bp = level.blueprint
@@ -17,7 +17,7 @@ def create_level(level: Level):
         try:
             id = request.get_json(force=True).get("id")
             if id in admins:
-                return "Hi admin! the flag is CTF(RLSisIMPORTANT)"
+                return "Hi admin! the flag is FLAG(RLSisIMPORTANT)"
             else:
                 return  "Error! Only admins can access this page!", 403
         except:
@@ -41,9 +41,9 @@ def create_level(level: Level):
     @bp.post('/submit_final')
     def submit_final_flag():
         submitted_flag = request.form.get("flag")
-        if submitted_flag == "CTF(RLSisIMPORTANT)":
+        if submitted_flag == "FLAG(RLSisIMPORTANT)":
             response = make_response(redirect('/level-5/'))
-            response.set_cookie("current_flag", "CTF(RLSisIMPORTANT)")
+            response.set_cookie("current_flag", "FLAG(RLSisIMPORTANT)")
             return response
         else:
             return "Incorrect final flag!", 403

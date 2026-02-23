@@ -34,8 +34,15 @@
       </div>
       <a class="cta-button" href="/level-0">Start level 0</a>
       <p>Or, Return to last level:</p>
-      <input class="cta-input" type="text" placeholder="Level flag" />
-      <button class="cta-button">Go</button>
+      <form method="POST" action="{{ url_for('main.return_to_level') }}">
+        <input
+          class="cta-input"
+          type="text"
+          name="flag"
+          placeholder="Level flag"
+        />
+        <button class="cta-button">Go</button>
+      </form>
     </div>
   </body>
 </html>

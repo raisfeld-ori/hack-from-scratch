@@ -2,7 +2,7 @@ from src.levels.levels import Level
 from flask import request, redirect, make_response
 from random import randint
 
-level_password = None
+level_password = "FLAG(RLSisIMPORTANT)"
 
 users = [
     {
@@ -45,9 +45,9 @@ def create_level(level: Level):
     @bp.post('/submit_final')
     def submit_final_flag():
         submitted_flag = request.form.get("flag")
-        if submitted_flag == "CTF(YourNowAnAmatuerHacker)":
+        if submitted_flag == "FLAG(YourNowAnAmatuerHacker)":
             response = make_response(redirect('/level-6/'))
-            response.set_cookie("current_flag", "CTF(YourNowAnAmatuerHacker)")
+            response.set_cookie("current_flag", "FLAG(YourNowAnAmatuerHacker)")
             return response
         else:
             return "Incorrect final flag!", 403
@@ -56,7 +56,7 @@ def create_level(level: Level):
     def get_my_info():
         id = request.args.get("id")
         if id == "25":
-            return "Hi Admin! Your ID is 25. Your secret flag is CTF(YourNowAnAmatuerHacker)"
+            return "Hi Admin! Your ID is 25. Your secret flag is FLAG(YourNowAnAmatuerHacker)"
         elif id == "21":
             return "Hi User! Your ID is 21. You have no extra permissions"
         res = list(filter(lambda user: user["id"] == int(id), users))

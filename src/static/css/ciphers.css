@@ -1,0 +1,94 @@
+
+/* Styles for the Caesar cipher tool on level-6 */
+.cipher-tool {
+	background: transparent;
+	border: 1px solid rgba(227,230,234,0.12);
+	padding: 1rem;
+	border-radius: 10px;
+	max-width: 720px;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.cipher-tool label {
+	font-weight: 600;
+	margin-right: 0.5rem;
+}
+
+.cipher-tool input[type="text"] {
+	width: 100%;
+	padding: 0.5rem 0.6rem;
+	font-family: monospace;
+	font-size: 1rem;
+	border: 1px solid #d0d4d8;
+	border-radius: 6px;
+	background: transparent;
+}
+
+.enc-display {
+	width: 100%;
+	padding: 0.25rem 0.35rem;
+	font-family: monospace;
+	font-size: 1rem;
+	color: inherit;
+}
+
+.key-controls {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+#keyNum {
+	width: 72px;
+	padding: 0.35rem 0.5rem;
+	border-radius: 6px;
+	border: 1px solid #d0d4d8;
+}
+
+#keyRange {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 6px;
+	background: linear-gradient(90deg,#4b8cff 0%, #7bc1ff 100%);
+	border-radius: 6px;
+	outline: none;
+	flex: 1;
+}
+
+.wheel {
+	width: 160px;
+	height: 160px;
+	border-radius: 50%;
+	margin: 0.5rem 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-weight: 700;
+	background: conic-gradient(#3b82f6 0deg, #60a5fa 120deg, #93c5fd 240deg, #3b82f6 360deg);
+	box-shadow: 0 6px 18px rgba(59,130,246,0.18);
+	transition: transform 0.35s cubic-bezier(.2,.9,.2,1);
+	user-select: none;
+	cursor: pointer;
+}
+
+.wheel::after {
+	content: "A - Z";
+	font-size: 0.9rem;
+	opacity: 0.95;
+}
+
+#decoded strong {
+	font-family: monospace;
+	background: transparent;
+	padding: 0.15rem 0.4rem;
+	border-radius: 4px;
+	border: none;
+}
+
+@media (max-width:600px){
+	.wheel{ width:120px; height:120px }
+}
+

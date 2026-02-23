@@ -1,0 +1,128 @@
+<!--Congrats! You found me. The flag is "FLAG(ilovehtml)" -->
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/default.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/ciphers.css') }}"
+/>
+<div class="container">
+  <h1>Level 6</h1>
+  <h2>Basic encryptions</h2>
+  <p>
+    Now that you know how to look at the website's internals, let's learn about
+    encryptions.
+    <br /><br />
+    Imagine you have a secret message you want to send to a friend, but you
+    don't want anyone else to understand it. Well, then instead of writing the
+    message normally, you could use an encryption to make it look like
+    gibberish.
+    <br /><br />
+    To start, we'll learn about the Caesar cipher, which is one of the simplest
+    and most well-known encryption techniques.
+    <a href="https://youtu.be/tvZ5O3RJfCQ?si=_V1niHlUFM9Toerq"
+      >Watch this video to get started</a
+    >
+  </p>
+
+  <div class="cipher-tool">
+    <label>Encrypted flag:</label>
+    <div id="encInput" class="enc-display">KQFL(ItsyXyjfqRdXjhwjy)</div>
+
+    <div class="key-controls">
+      <label for="keyNum">Key:</label>
+      <input id="keyNum" type="number" min="0" max="25" value="5" />
+      <input id="keyRange" type="range" min="0" max="25" value="5" />
+    </div>
+
+    <div class="wheel" id="wheel" aria-hidden="true"></div>
+
+    <p>Decoded: <strong id="decoded"></strong></p>
+  </div>
+
+  <form method="POST" action="{{ url_for('level-6.submit_final_flag') }}">
+    <input type="text" name="flag" placeholder="Flag" required />
+    <button type="submit">Submit flag</button>
+  </form>
+</div>
+
+<script>
+  (function () {
+    const encInput = document.getElementById("encInput");
+    const keyNum = document.getElementById("keyNum");
+    const keyRange = document.getElementById("keyRange");
+    const decodedEl = document.getElementById("decoded");
+    const wheel = document.getElementById("wheel");
+
+    function caesarDecode(text, k) {
+      k = ((k % 26) + 26) % 26;
+      let out = "";
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        const code = ch.charCodeAt(0);
+        if (code >= 65 && code <= 90) {
+          // Uppercase
+          out += String.fromCharCode(((code - 65 - k + 26) % 26) + 65);
+        } else if (code >= 97 && code <= 122) {
+          // Lowercase
+          out += String.fromCharCode(((code - 97 - k + 26) % 26) + 97);
+        } else {
+          out += ch;
+        }
+      }
+      return out;
+    }
+
+    function update() {
+      const k = parseInt(keyNum.value, 10) || 0;
+      // sync controls
+      if (keyRange.value !== keyNum.value) keyRange.value = keyNum.value;
+      const decoded = caesarDecode(
+        encInput.textContent || encInput.innerText || "",
+        k,
+      );
+      decodedEl.textContent = decoded;
+      const deg = (k / 26) * 360;
+      wheel.style.transform = "rotate(" + deg + "deg)";
+    }
+
+    keyNum.addEventListener("input", function () {
+      keyRange.value = keyNum.value;
+      update();
+    });
+
+    keyRange.addEventListener("input", function () {
+      keyNum.value = keyRange.value;
+      update();
+    });
+
+    // clicking the wheel increments the key (wraps 0-25)
+    wheel.addEventListener("click", function () {
+      keyNum.value = (parseInt(keyNum.value, 10) + 1) % 26;
+      keyRange.value = keyNum.value;
+      update();
+    });
+
+    // allow pressing left/right to change key when focused on wheel
+    wheel.tabIndex = 0;
+    wheel.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+        keyNum.value = (parseInt(keyNum.value, 10) - 1 + 26) % 26;
+        keyRange.value = keyNum.value;
+        update();
+        e.preventDefault();
+      }
+      if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+        keyNum.value = (parseInt(keyNum.value, 10) + 1) % 26;
+        keyRange.value = keyNum.value;
+        update();
+        e.preventDefault();
+      }
+    });
+
+    // initial render
+    update();
+  })();
+</script>
