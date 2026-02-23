@@ -1,0 +1,222 @@
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/facebook.css') }}"
+/>
+<div class="app">
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left">
+        <div class="logo">Hack</div>
+      </div>
+      <div class="navbar-center">
+        <input
+          type="text"
+          class="search-bar"
+          id="search-bar"
+          placeholder="Search users..."
+          disabled
+        />
+      </div>
+      <div
+        class="navbar-right"
+        onClick="fetch('/level-5/myinfo?id=21').then(response => response.text()).then(data => alert(data))"
+      >
+        <img
+          class="user-icon-btn"
+          id="user-menu-btn"
+          src="{{ url_for('static', filename='images/person.png') }}"
+          alt="User"
+        />
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <div class="Users-list" id="Users-list">
+      <div class="loading">Loading Users...</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="welcome-modal">
+  <div class="modal-content welcome-modal-content">
+    <h2>Level 5</h2>
+    <p>
+      You'e learned about IDOR and dev tools, now, it's time you use your skills
+      in a real situation.
+    </p>
+    <br />
+    <p>
+      This is a new evil social media. You want to stop the social media by
+      becoming an admin.
+    </p>
+    <br />
+    <p>
+      The following is the main page of the social media. Find an admin and take
+      over their account
+    </p>
+    <br /><br />
+    <p>
+      NOTE: all of the unnecesery features (Messaging, Search, etc) are
+      disabled. If you completed previous lessons, you should be able to solve
+      this CTF without these features.
+    </p>
+    <button class="btn-primary" id="close-welcome-btn">Get Started</button>
+  </div>
+</div>
+
+<div class="modal" id="user-modal">
+  <div class="modal-content user-modal-content">
+    <button class="modal-close" id="close-user-modal">&times;</button>
+    <div class="user-profile">
+      <img class="user-profile-pic" id="user-profile-pic" src="" alt="User" />
+      <h2 id="user-name"></h2>
+      <p id="user-username"></p>
+      <div class="user-info" id="user-info"></div>
+      <button class="btn-secondary" id="message-btn" disabled>Message</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  class HackSPA {
+    constructor() {
+      this.currentUser = null;
+      this.allUsers = [];
+      this.init();
+    }
+
+    init() {
+      this.setupEventListeners();
+      this.showWelcomeModal();
+      this.loadUsers();
+    }
+
+    setupEventListeners() {
+      const closeWelcomeBtn = document.getElementById("close-welcome-btn");
+      if (closeWelcomeBtn) {
+        closeWelcomeBtn.addEventListener("click", () => {
+          this.hideWelcomeModal();
+        });
+      }
+
+      const closeUserModal = document.getElementById("close-user-modal");
+      if (closeUserModal) {
+        closeUserModal.addEventListener("click", () => {
+          this.hideUserModal();
+        });
+      }
+
+      const closeEditProfileModal = document.getElementById(
+        "close-edit-profile-modal",
+      );
+      if (closeEditProfileModal) {
+        closeEditProfileModal.addEventListener("click", () => {
+          this.hideEditProfileModal();
+        });
+      }
+    }
+
+    showWelcomeModal() {
+      document.getElementById("welcome-modal").style.display = "flex";
+    }
+
+    hideWelcomeModal() {
+      document.getElementById("welcome-modal").style.display = "none";
+    }
+
+    showUserModal(user) {
+      this.currentUser = user;
+      document.getElementById("user-name").textContent = user.name || "User";
+      document.getElementById("user-username").textContent =
+        "@" + (user.username || "user");
+      document.getElementById("user-profile-pic").src = user.image;
+      document.getElementById("user-info").textContent =
+        user.bio || "No bio available";
+      document.getElementById("user-modal").style.display = "flex";
+    }
+
+    hideUserModal() {
+      document.getElementById("user-modal").style.display = "none";
+      this.currentUser = null;
+    }
+
+    async loadUsers() {
+      try {
+        const response = await fetch("/level-5/users?id=21", {
+          method: "GET",
+        });
+        const Users = await response.json();
+        this.allUsers = Users || [];
+        this.renderUsers(this.allUsers);
+      } catch (error) {
+        console.error("Error loading Users:", error);
+        document.getElementById("Users-list").innerHTML =
+          '<div class="error">Failed to load Users</div>';
+      }
+    }
+
+    renderUsers(Users) {
+      const container = document.getElementById("Users-list");
+      if (!Users || Users.length === 0) {
+        container.innerHTML = '<div class="empty-state">No Users found</div>';
+        return;
+      }
+
+      container.innerHTML = Users.map(
+        (user) => `
+        <div class="user-item" data-user-id="${user.id}">
+            <img src="${user.image}" alt="${user.name}" class="user-avatar" />
+            <div class="user-info">
+            <h3>${user.name || "user"}</h3>
+            <p>${user.username ? "@" + user.username : "No username"}</p>
+            </div>
+        </div>
+        `,
+      ).join("");
+
+      document.querySelectorAll(".user-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          const userId = item.dataset.userId;
+          const user = this.allUsers.find((f) => f.id == userId);
+          if (user) this.showUserModal(user);
+        });
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    new HackSPA();
+  });
+</script>
+<form
+  class="flag-widget"
+  id="flag-widget"
+  method="POST"
+  action="{{ url_for('level-5.submit_final_flag') }}"
+>
+  <div class="flag-bar" id="flag-bar" aria-hidden="false">
+    <span class="flag-icon" id="flag-icon">⚑</span>
+    <input
+      id="flag-input"
+      class="flag-input"
+      type="text"
+      name="flag"
+      placeholder="flag"
+      aria-label="flag"
+    />
+    <button id="flag-submit" class="btn-primary flag-submit">
+      Submit Flag
+    </button>
+  </div>
+</form>
+
+<div
+  class="hint-widget"
+  id="hint-widget"
+  onClick="alert('Hint: It seems when you enter this page, a certain request to /users happens. Let\'s see if we can find who\'s the admin, and then change our ID to his')"
+>
+  <div class="hint-bar" id="hint-bar" aria-hidden="false">
+    <span class="hint-icon" id="hint-icon">Hint</span>
+  </div>
+</div>

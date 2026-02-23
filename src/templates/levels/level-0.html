@@ -1,0 +1,35 @@
+<!--Congrats! You found me. The flag is "CTF(ilovehtml)" -->
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/default.css') }}"
+/>
+<div class="container">
+  <h1>Level 0</h1>
+  <h2>Inside the page</h2>
+  <p>
+    To start becoming a hacker, we first need to learn how to look at the
+    website's internals.
+    <br /><br />
+    Open the Dev tools.
+    <br />
+    On Google Chrome - Press F12 or right-click anywhere on the page and select
+    "Inspect".
+    <br />
+    On Firefox - Press F12 or right-click anywhere on the page and select
+    "Inspect Element".
+    <br /><br />
+    Use this video for reference:
+    <a href="https://youtu.be/r9bMGKET8xg?si=YKR2ntqJQ-XDkkz7"
+      >Developer Tools Tutorial</a
+    >
+    <br /><br />
+    Once you've opened the Dev tools, try searching for the 'flag' word, find it
+    and submit it here.
+  </p>
+
+  <form method="POST" action="{{ url_for('level-0.submit_final_flag') }}">
+    <input type="text" name="flag" placeholder="Flag" required />
+    <button type="submit">Submit flag</button>
+  </form>
+</div>

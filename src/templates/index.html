@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hack From Scratch</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/default.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Hack From Scratch</h1>
+      <div class="modal">
+        <div class="modal-content">
+          <h2>Explanation:</h2>
+          <p>
+            This is a CTF (Capture The Flag) game for newbies. No experience is
+            required! Each level includes tutorials and guides on the subjects
+            required to beat it. After beating a level, you will get a 'flag'- a
+            text that lets you go into the next stage
+          </p>
+          <h2>Please remember:</h2>
+          <p>
+            I am a single developer who made this entire CTF to help people.
+            Please, PLEASE do not abuse it. If I see any malicious activity, I
+            will have to shut down the entire server for a while.
+            <br /><br />
+            Also, keep your flags saved somewhere, you can use them to return to
+            levels even after completing them.
+          </p>
+        </div>
+      </div>
+      <a class="cta-button" href="/level-0">Start level 0</a>
+      <p>Or, Return to last level:</p>
+      <input class="cta-input" type="text" placeholder="Level flag" />
+      <button class="cta-button">Go</button>
+    </div>
+  </body>
+</html>

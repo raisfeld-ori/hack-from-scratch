@@ -1,0 +1,32 @@
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/default.css') }}"
+/>
+<div class="container">
+  <h1>Level 1</h1>
+  <h2>Intercepting Requests PT 1</h2>
+  <p>
+    Congrats on beating level 0! You can now call yourself a 'hacker' ;)
+    <br />
+    We can see in this page a button that talks with the server. Let's try to
+    'intercept' the request of the button, and see if we can find any useful
+    information
+    <br /><br />
+    Are you struggling with intercepting requests? Re-watch this video:
+    <a href="https://youtu.be/r9bMGKET8xg?si=YKR2ntqJQ-XDkkz7"
+      >Developer Tools Tutorial</a
+    >
+  </p>
+
+  <button
+    class="ctf-button"
+    onClick="fetch('/level-1/secret_flag', { method: 'POST', body: 'Whats the secret flag?' })"
+  >
+    Click me!
+  </button>
+
+  <form method="POST" action="{{ url_for('level-1.submit_final_flag') }}">
+    <input type="text" name="flag" placeholder="Flag" required />
+    <button type="submit">Submit flag</button>
+  </form>
+</div>

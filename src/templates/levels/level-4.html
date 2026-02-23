@@ -1,0 +1,47 @@
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/default.css') }}"
+/>
+<div class="container">
+  <h1>Level 4</h1>
+  <h2>Indirect Object Refrence (IDOR)</h2>
+  <p>
+    Now that you've completed level 3, we're moving the level up even more!
+    <br />
+    The following lesson is based on a
+    <a href="https://nvd.nist.gov/vuln/detail/cve-2025-11690"
+      >real vulnerability
+    </a>
+    <br />
+    You're given a couple of buttons from their website. Let's see if you can
+    find a way to access /admin ;)
+    <br /><br />
+    NOTE: Every 5 levels, you will be given a 'boss' level. Get ready, The next
+    level's going to be tough!
+  </p>
+  <button
+    class="ctf-button-secondary"
+    onClick="alert('Hint: I can see a /user route, I wonder if /users exists')"
+  >
+    Hint
+  </button>
+  <div>
+    <button
+      class="ctf-button"
+      onClick="fetch('/level-4/users', { method: 'POST', body: JSON.stringify({'id': 21}) }).then(res => res.text()).then(alert)"
+    >
+      Your info
+    </button>
+    <button
+      class="ctf-button"
+      onClick="fetch('/level-4/admin', { method: 'POST', body: JSON.stringify({'id': 21}) }).then(res => res.text()).then(alert)"
+    >
+      Admin info
+    </button>
+  </div>
+
+  <form method="POST" action="{{ url_for('level-4.submit_final_flag') }}">
+    <input type="text" name="flag" placeholder="Flag" required />
+    <button type="submit">Submit flag</button>
+  </form>
+</div>

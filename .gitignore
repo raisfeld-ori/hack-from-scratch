@@ -1,0 +1,6 @@
+.venv/
+.ssh/
+.vscode/
+__pycache__/
+*.pyc
+*.pyo

@@ -1,0 +1,38 @@
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/default.css') }}"
+/>
+<div class="container">
+  <h1>Level 3</h1>
+  <h2>Parameter Tampering</h2>
+  <p>
+    Congrats on beating level 2! Now, let's do a <b>real</b> hacking technique,
+    parameter tampering.
+    <br />
+    After you hacked the last server, they added some security to the /admin
+    page, so only admins can enter. Let's see if we can turn ourselves into an
+    admin
+    <br />
+    Tip: If you find yourself stuck, before the hint, try learning about
+    <a
+      href="https://owasp.org/www-community/attacks/Parameter_tampering"
+      target="_blank"
+      >Parameter tampering</a
+    >
+  </p>
+  <button
+    class="ctf-button-secondary"
+    onClick="alert('Hint: We can see a request is being made to /admin like last time. But we can now see \'role=user\' in the request. I wonder what would happen if we changed it to \'role=admin\'')"
+  >
+    Hint
+  </button>
+
+  <button class="ctf-button" onClick="fetch('/level-3/admin?role=user')">
+    Click me!
+  </button>
+
+  <form method="POST" action="{{ url_for('level-3.submit_final_flag') }}">
+    <input type="text" name="flag" placeholder="Flag" required />
+    <button type="submit">Submit flag</button>
+  </form>
+</div>

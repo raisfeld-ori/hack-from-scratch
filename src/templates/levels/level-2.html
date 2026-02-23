@@ -1,0 +1,36 @@
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/default.css') }}"
+/>
+<div class="container">
+  <h1>Level 2</h1>
+  <h2>Intercepting Requests PT 2</h2>
+  <p>
+    Congrats on beating level 1! Let's try intercepting requests one more time.
+    <br />
+    Open the devtools again, this time, I will not give you hints. Search for
+    any suspicious requests, collect information until you manage to find the
+    flag.
+    <br /><br />
+    NOTE: From now on, the challenges are a little more difficult, so you're
+    given a 'hint' button that will help you with solving the level
+  </p>
+  <button
+    class="ctf-button-secondary"
+    onClick="alert('Hint: It seems the requests are reaching \'/admin\'. Let\'s try going to /admin')"
+  >
+    Hint
+  </button>
+
+  <button
+    class="ctf-button"
+    onClick="fetch('/level-2/admin', { method: 'POST', body: 'Whats the secret flag?' })"
+  >
+    Click me!
+  </button>
+
+  <form method="POST" action="{{ url_for('level-2.submit_final_flag') }}">
+    <input type="text" name="flag" placeholder="Flag" required />
+    <button type="submit">Submit flag</button>
+  </form>
+</div>
