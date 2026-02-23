@@ -1,36 +1,126 @@
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/default.css') }}"
-/>
-<div class="container">
-  <h1>Level 2</h1>
-  <h2>Intercepting Requests PT 2</h2>
-  <p>
-    Congrats on beating level 1! Let's try intercepting requests one more time.
-    <br />
-    Open the devtools again, this time, I will not give you hints. Search for
-    any suspicious requests, collect information until you manage to find the
-    flag.
-    <br /><br />
-    NOTE: From now on, the challenges are a little more difficult, so you're
-    given a 'hint' button that will help you with solving the level
-  </p>
-  <button
-    class="ctf-button-secondary"
-    onClick="alert('Hint: It seems the requests are reaching \'/admin\'. Let\'s try going to /admin')"
-  >
-    Hint
-  </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}" />
+</head>
+<body>
+  <!-- Page Transition Overlay -->
+  <div class="page-transition"></div>
 
-  <button
-    class="ctf-button"
-    onClick="fetch('/level-2/admin', { method: 'POST', body: 'Whats the secret flag?' })"
-  >
-    Click me!
-  </button>
+<div class="level-page level-2-page">
+  <header class="hero">
+    <h1 class="title">Level 2</h1>
+    <p class="subtitle">Intercepting Requests • Part 2</p>
+  </header>
 
-  <form method="POST" action="{{ url_for('level-2.submit_final_flag') }}">
-    <input type="text" name="flag" placeholder="Flag" required />
-    <button type="submit">Submit flag</button>
-  </form>
+  <main class="level-grid">
+    <section class="level-card overview">
+      <h2>Mission</h2>
+      <p>
+        Congrats on beating level 1! Intercept requests again—this time with
+        fewer hints. Watch for suspicious endpoints and inspect responses.
+      </p>
+      <ol class="level-list">
+        <li>Open DevTools → Network.</li>
+        <li>Trigger the request.</li>
+        <li>Follow the trail to the flag.</li>
+      </ol>
+      <div class="level-tip">Tip: Look for an admin endpoint.</div>
+    </section>
+
+    <section class="level-card video">
+      <h2>Watch</h2>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/r9bMGKET8xg"
+          title="Developer Tools Tutorial"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </section>
+
+    <section class="level-card challenge">
+      <h2>Request Handler</h2>
+      <p>
+        The request is triggered from a button in this area. Find it and watch
+        the response.
+      </p>
+      <div class="challenge-meta">Hint: It’s a button.</div>
+      <button
+        class="ctf-button challenge-button"
+        aria-label="Trigger request"
+        onClick="fetch('/level-2/admin', { method: 'POST', body: 'Whats the secret flag?' }); this.classList.add('clicked'); setTimeout(() => this.classList.remove('clicked'), 1000);"
+      ></button>
+    </section>
+
+    <section class="level-card submit">
+      <h2>Submit the flag</h2>
+      <p class="submit-subtitle">Paste the exact flag you discovered.</p>
+      <form method="POST" action="{{ url_for('level-2.submit_final_flag') }}">
+        <input type="text" name="flag" placeholder="flag{...}" required />
+        <button type="submit">Submit flag</button>
+      </form>
+      <div class="submit-help">
+        Tip: Keep your flags saved — they unlock future levels.
+      </div>
+    </section>
+  </main>
+
+  <button class="hint-fab" aria-label="Open hint" onclick="document.body.classList.add('hint-open')">
+    ?
+  </button>
+  <div class="hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+    <div class="hint-modal-content">
+      <div class="hint-modal-header">
+        <h2>Hint</h2>
+        <button class="hint-close" aria-label="Close hint" onclick="document.body.classList.remove('hint-open')">×</button>
+      </div>
+      <p>
+        It seems the requests are reaching <strong>/admin</strong>. Try going
+        to /admin.
+      </p>
+      <button class="hint-button" onclick="document.body.classList.remove('hint-open')">Got it</button>
+    </div>
+  </div>
+
+  <div class="level-footer-glow"></div>
 </div>
+
+  <script>
+    function handlePageTransition(href) {
+      const transition = document.querySelector('.page-transition');
+      transition.classList.remove('end');
+      transition.classList.add('start');
+      
+      setTimeout(() => {
+        window.location.href = href;
+      }, 500);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const transition = document.querySelector('.page-transition');
+      if (transition) {
+        setTimeout(() => {
+          transition.classList.add('end');
+        }, 50);
+      }
+
+      document.querySelectorAll('a').forEach(link => {
+        if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
+          link.addEventListener('click', function(e) {
+            if (!this.href.includes('#')) {
+              e.preventDefault();
+              handlePageTransition(this.href);
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

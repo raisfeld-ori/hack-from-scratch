@@ -1,32 +1,113 @@
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/default.css') }}"
-/>
-<div class="container">
-  <h1>Level 1</h1>
-  <h2>Intercepting Requests PT 1</h2>
-  <p>
-    Congrats on beating level 0! You can now call yourself a 'hacker' ;)
-    <br />
-    We can see in this page a button that talks with the server. Let's try to
-    'intercept' the request of the button, and see if we can find any useful
-    information
-    <br /><br />
-    Are you struggling with intercepting requests? Re-watch this video:
-    <a href="https://youtu.be/r9bMGKET8xg?si=YKR2ntqJQ-XDkkz7"
-      >Developer Tools Tutorial</a
-    >
-  </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 1</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}" />
+</head>
+<body>
+  <!-- Page Transition Overlay -->
+  <div class="page-transition"></div>
 
-  <button
-    class="ctf-button"
-    onClick="fetch('/level-1/secret_flag', { method: 'POST', body: 'Whats the secret flag?' })"
-  >
-    Click me!
-  </button>
+<div class="level-page level-1-page">
+  <header class="hero">
+    <h1 class="title">Level 1</h1>
+    <p class="subtitle">Intercepting Requests • Part 1</p>
+  </header>
 
-  <form method="POST" action="{{ url_for('level-1.submit_final_flag') }}">
-    <input type="text" name="flag" placeholder="Flag" required />
-    <button type="submit">Submit flag</button>
-  </form>
+  <main class="level-grid">
+    <section class="level-card overview">
+      <h2>Mission</h2>
+      <p>
+        Congrats on beating level 0! This level is about intercepting requests.
+        Find the request handler and notice it’s triggered by a button on this
+        page.
+      </p>
+      <ol class="level-list">
+        <li>Open DevTools → Network.</li>
+        <li>Trigger the request.</li>
+        <li>Inspect the response for the secret flag.</li>
+      </ol>
+      <div class="level-tip">
+        Tip: Filter by Fetch/XHR and look for POST.
+      </div>
+    </section>
+
+    <section class="level-card video">
+      <h2>Watch</h2>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/r9bMGKET8xg"
+          title="Developer Tools Tutorial"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </section>
+
+    <section class="level-card challenge">
+      <h2>Request Handler</h2>
+      <p>
+        There’s a hidden request trigger in this area. Find it and capture the
+        response.
+      </p>
+      <div class="challenge-meta">Hint: It’s a button.</div>
+      <button
+        class="ctf-button challenge-button"
+        aria-label="Trigger request"
+        onClick="fetch('/level-1/secret_flag', { method: 'POST', body: 'Whats the secret flag?' }); this.classList.add('clicked'); setTimeout(() => this.classList.remove('clicked'), 1000);"
+      >
+      </button>
+    </section>
+
+    <section class="level-card submit">
+      <h2>Submit the flag</h2>
+      <p class="submit-subtitle">Paste the exact flag you discovered.</p>
+      <form method="POST" action="{{ url_for('level-1.submit_final_flag') }}">
+        <input type="text" name="flag" placeholder="flag{...}" required />
+        <button type="submit">Submit flag</button>
+      </form>
+      <div class="submit-help">
+        Tip: Keep your flags saved — they unlock future levels.
+      </div>
+    </section>
+  </main>
+
+  <div class="level-footer-glow"></div>
 </div>
+
+  <script>
+    function handlePageTransition(href) {
+      const transition = document.querySelector('.page-transition');
+      transition.classList.remove('end');
+      transition.classList.add('start');
+      
+      setTimeout(() => {
+        window.location.href = href;
+      }, 500);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const transition = document.querySelector('.page-transition');
+      if (transition) {
+        setTimeout(() => {
+          transition.classList.add('end');
+        }, 50);
+      }
+
+      document.querySelectorAll('a').forEach(link => {
+        if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
+          link.addEventListener('click', function(e) {
+            if (!this.href.includes('#')) {
+              e.preventDefault();
+              handlePageTransition(this.href);
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

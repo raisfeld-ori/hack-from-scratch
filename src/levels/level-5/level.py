@@ -1,6 +1,5 @@
 from src.levels.levels import Level
 from flask import request, redirect, make_response
-from random import randint
 
 level_password = None
 
@@ -10,31 +9,31 @@ users = [
         "username": "Alice",
         "name": "Alice",
         "bio": "I'm Alice!, I love hiking and cooking.",
-        "image": f"https://picsum.photos/id/{randint(1, 800)}/200/300",
+        "image": "https://i.pravatar.cc/150?img=1",
         "isAdmin": False,
     },
     {
         "id": 23,
         "username": "Bob",
         "name": "Bob",
-        "bio": "Bob here, I'm a Nerd",
-        "image": f"https://picsum.photos/id/{randint(1, 800)}/200/300",
+        "bio": "Bob here, I'm a a baby",
+        "image": "https://i.pravatar.cc/150?img=2",
         "isAdmin": False,
     },
     {
         "id": 24,
-        "username": "Charlie",
-        "name": "Charlie",
-        "bio": "Charlie is my name, and I enjoy photography and traveling.",
-        "image": f"https://picsum.photos/id/{randint(1, 800)}/200/300",
+        "username": "Ariel",
+        "name": "Ariel",
+        "bio": "Hi, I'm the goat! I love bullying and coding.",
+        "image": "/static/images/ariel.png",
         "isAdmin": False,
     },
     {
         "id": 25,
-        "username": "Dana",
-        "name": "Dana",
-        "bio": "Hi, I'm Dana! I love painting and music.",
-        "image": f"https://picsum.photos/id/{randint(1, 800)}/200/300",
+        "username": "Yogev",
+        "name": "Yogev",
+        "bio": "Hi, I'm Yogev! I love painting and vibe coding.",
+        "image": "https://i.pravatar.cc/150?img=4",
         "isAdmin": True,
     }
 ]

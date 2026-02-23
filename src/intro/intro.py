@@ -12,3 +12,8 @@ def set_levels(lvls: list[Level]):
 @main_blueprint.route("/")
 def index():
     return render_template("index.html")
+
+    
+@main_blueprint.route("/info")
+def info():
+    return render_template("info.html")

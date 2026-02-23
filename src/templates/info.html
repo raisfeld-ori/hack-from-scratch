@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How It Works • Hack From Scratch</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/default.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition"></div>
+
+    <div class="page info-page">
+      <header class="hero">
+        <h1 class="title">How It Works</h1>
+        <p class="subtitle">Interactive guide to your first flag</p>
+      </header>
+
+      <main class="info-grid">
+        <section class="info-card">
+          <div class="info-header">
+            <span class="step">Step 1</span>
+            <h2>Read the hint</h2>
+          </div>
+          <p>
+            Each level includes a short briefing. It tells you what skill to
+            learn and where to look.
+          </p>
+          <details class="info-details">
+            <summary>Try it</summary>
+            <p>
+              Open the level page, read the clue, then take the smallest action
+              you can (click, view source, inspect).
+            </p>
+          </details>
+        </section>
+
+        <section class="info-card">
+          <div class="info-header">
+            <span class="step">Step 2</span>
+            <h2>Find the flag</h2>
+          </div>
+          <p>
+            Flags look like this. They are short text strings that prove you
+            solved the level.
+          </p>
+          <div class="flag-row">
+            <div class="flag-card">
+              <svg viewBox="0 0 120 90" class="flag-svg" aria-hidden="true">
+                <rect x="10" y="15" width="6" height="60" rx="2" />
+                <path d="M16 18 L90 24 L78 45 L90 66 L16 72 Z" />
+              </svg>
+              <span>flag{first_steps}</span>
+            </div>
+            <div class="flag-card">
+              <svg viewBox="0 0 120 90" class="flag-svg" aria-hidden="true">
+                <rect x="10" y="15" width="6" height="60" rx="2" />
+                <path d="M16 18 L96 24 L84 45 L96 66 L16 72 Z" />
+              </svg>
+              <span>flag{inspect_the_dom}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-card wide">
+          <div class="info-header">
+            <span class="step">Step 3</span>
+            <h2>Use the flag</h2>
+          </div>
+          <p>
+            Paste the flag on the home page to unlock the next level. Save it so
+            you can return later.
+          </p>
+          <details class="info-details">
+            <summary>Why it matters</summary>
+            <p>
+              Flags track progress without accounts. They are your key to move
+              forward.
+            </p>
+          </details>
+        </section>
+
+        <section class="info-card side">
+          <div class="info-header">
+            <span class="step">Bonus</span>
+            <h2>Safe mindset</h2>
+          </div>
+          <p>
+            Practice on this site only. Be respectful so the server stays up for
+            everyone.
+          </p>
+        </section>
+
+        <section class="info-actions">
+          <a class="cta-button primary" href="/level-0">Start level 0</a>
+          <a class="cta-link" href="/">Back to home</a>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      function handlePageTransition(href) {
+        const transition = document.querySelector('.page-transition');
+        transition.classList.remove('end');
+        transition.classList.add('start');
+        
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const transition = document.querySelector('.page-transition');
+        if (transition) {
+          setTimeout(() => {
+            transition.classList.add('end');
+          }, 50);
+        }
+
+        document.querySelectorAll('a').forEach(link => {
+          if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
+            link.addEventListener('click', function(e) {
+              if (!this.href.includes('#')) {
+                e.preventDefault();
+                handlePageTransition(this.href);
+              }
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

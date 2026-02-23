@@ -10,32 +10,89 @@
     />
   </head>
   <body>
-    <div class="container">
-      <h1 class="title">Hack From Scratch</h1>
-      <div class="modal">
-        <div class="modal-content">
-          <h2>Explanation:</h2>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition"></div>
+
+    <div class="page">
+      <header class="hero">
+        <h1 class="title">Hack From Scratch</h1>
+        <p class="subtitle">CTF for newbies • Learn, hack, level up</p>
+      </header>
+
+      <main class="grid">
+        <section class="card explanation">
+          <h2>Explanation</h2>
           <p>
             This is a CTF (Capture The Flag) game for newbies. No experience is
             required! Each level includes tutorials and guides on the subjects
-            required to beat it. After beating a level, you will get a 'flag'- a
-            text that lets you go into the next stage
+            required to beat it. After beating a level, you will get a “flag” —
+            a text that lets you go into the next stage.
           </p>
-          <h2>Please remember:</h2>
+          <a class="info-button" href="/info">How it works</a>
+        </section>
+
+        <section class="card remember">
+          <h2>Please remember</h2>
           <p>
-            I am a single developer who made this entire CTF to help people.
-            Please, PLEASE do not abuse it. If I see any malicious activity, I
-            will have to shut down the entire server for a while.
-            <br /><br />
-            Also, keep your flags saved somewhere, you can use them to return to
-            levels even after completing them.
+            We are an extremely small team who made this entire CTF to help
+            people. Please, PLEASE do not abuse it. If we see any malicious
+            activity, we will have to shut down the entire server for a while.
           </p>
-        </div>
-      </div>
-      <a class="cta-button" href="/level-0">Start level 0</a>
-      <p>Or, Return to last level:</p>
-      <input class="cta-input" type="text" placeholder="Level flag" />
-      <button class="cta-button">Go</button>
+          <p>
+            Also, keep your flags saved somewhere — you can use them to return
+            to levels even after completing them.
+          </p>
+        </section>
+
+        <section class="card actions">
+          <a class="cta-button primary" href="/level-0">Start level 0</a>
+          <div class="or-line">or return to last level</div>
+          <p class="flag-help">Paste your saved flag to jump back in.</p>
+          <div class="flag-chips">
+            <span>Example:</span>
+            <span class="chip">flag{level_2}</span>
+            <span class="chip">flag{web_intro}</span>
+          </div>
+          <div class="input-row">
+            <input class="cta-input" type="text" placeholder="Level flag" />
+            <button class="cta-button secondary">Go</button>
+          </div>
+        </section>
+      </main>
     </div>
+
+    <script>
+      function handlePageTransition(href) {
+        const transition = document.querySelector('.page-transition');
+        transition.classList.remove('end');
+        transition.classList.add('start');
+        
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Animate in on page load
+        const transition = document.querySelector('.page-transition');
+        if (transition) {
+          setTimeout(() => {
+            transition.classList.add('end');
+          }, 50);
+        }
+
+        // Intercept all internal links
+        document.querySelectorAll('a').forEach(link => {
+          if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
+            link.addEventListener('click', function(e) {
+              if (!this.href.includes('#')) {
+                e.preventDefault();
+                handlePageTransition(this.href);
+              }
+            });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

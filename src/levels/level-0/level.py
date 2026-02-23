@@ -1,5 +1,5 @@
 from src.levels.levels import Level
-from flask import request, redirect, make_response
+from flask import request, redirect, make_response, render_template
 
 
 level_password = None
@@ -15,7 +15,7 @@ def create_level(level: Level):
             response.set_cookie("current_flag", "CTF(ilovehtml)")
             return response
         else:
-            return "Incorrect final flag!", 403
+            return render_template("levels/level-0.html", error="Incorrect flag. Try again."), 403
 
     
     return level
