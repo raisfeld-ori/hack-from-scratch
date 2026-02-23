@@ -1,134 +1,239 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Level 5: Social Engineering</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/facebook.css') }}" />
-</head>
-<body class="level-5-body">
-  <!-- Page Transition Overlay -->
-  <div class="page-transition"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Level 5: Social Engineering</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/default.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/facebook.css') }}"
+    />
+  </head>
+  <body class="level-5-body">
+    <!-- Page Transition Overlay -->
+    <div class="page-transition"></div>
 
-  <!-- Top Overlay Header -->
-  <div class="boss-level-header">
-    <div class="boss-level-title">Level 5</div>
-    <div class="boss-level-subtitle">Social Engineering • Find the Admin</div>
-  </div>
+    <!-- Top Overlay Header -->
+    <div class="boss-level-header">
+      <div class="boss-level-title">Level 5</div>
+      <div class="boss-level-subtitle">Social Engineering • Find the Admin</div>
+    </div>
 
-  <div class="boss-facebook-layout">
-    <aside class="boss-left-sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-item">
-          <span class="sidebar-icon">👤</span>
-          <span>Your Profile</span>
-        </div>
-        <div class="sidebar-item">
-          <span class="sidebar-icon">👥</span>
-          <span>Friends</span>
-        </div>
-        <div class="sidebar-item">
-          <span class="sidebar-icon">📱</span>
-          <span>Feed</span>
-        </div>
-      </div>
-    </aside>
-
-    <div class="boss-center-feed">
-      <div class="fb-post welcome-post">
-        <div class="fb-post-header">
-          <div class="fb-post-avatar">📌</div>
-          <div class="fb-post-meta">
-            <div class="fb-post-author">HackSocial</div>
-            <div class="fb-post-time">Welcome</div>
+    <div class="boss-facebook-layout">
+      <aside class="boss-left-sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-item">
+            <span class="sidebar-icon">👤</span>
+            <span>Your Profile</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-icon">👥</span>
+            <span>Friends</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-icon">📱</span>
+            <span>Feed</span>
           </div>
         </div>
-        <div class="fb-post-content">
-          <p style="font-size: 0.9rem; line-height: 1.3; margin: 0.6rem 0">
-            Welcome to HackSocial! This social platform has a critical security vulnerability. Your mission is to find the admin's hidden information.
-          </p>
-          <p style="font-size: 0.85rem; color: #3b82f6; margin: 0.4rem 0">
-            <strong>💡 Tip:</strong> Check each user's profile carefully - discover who the admin is!
-          </p>
+      </aside>
+
+      <div class="boss-center-feed">
+        <div class="fb-post welcome-post">
+          <div class="fb-post-header">
+            <div class="fb-post-avatar">📌</div>
+            <div class="fb-post-meta">
+              <div class="fb-post-author">HackSocial</div>
+              <div class="fb-post-time">Welcome</div>
+            </div>
+          </div>
+          <div class="fb-post-content">
+            <p style="font-size: 0.9rem; line-height: 1.3; margin: 0.6rem 0">
+              Welcome to HackSocial! This social platform has a critical
+              security vulnerability. Your mission is to find the admin's hidden
+              information.
+            </p>
+            <p style="font-size: 0.85rem; color: #3b82f6; margin: 0.4rem 0">
+              <strong>💡 Tip:</strong> Check each user's profile carefully -
+              discover who the admin is!
+            </p>
+          </div>
+        </div>
+
+        <div id="users-feed"></div>
+      </div>
+
+      <aside class="boss-right-sidebar">
+        <div class="right-sidebar-card">
+          <h3>📊 Active Users</h3>
+          <p id="user-count-display">0</p>
+        </div>
+        <div class="right-sidebar-card">
+          <h3>🎯 Your Task</h3>
+          <ul
+            style="
+              font-size: 0.78rem;
+              line-height: 1.4;
+              margin: 0;
+              padding-left: 0;
+              list-style: none;
+            "
+          >
+            <li>✓ Explore profiles</li>
+            <li>✓ Find the admin</li>
+            <li>✓ Discover the flag</li>
+            <li>✓ Submit and win</li>
+          </ul>
+        </div>
+        <button
+          class="submit-flag-btn"
+          onclick="document.getElementById('flagModal').style.display = 'flex'"
+        >
+          Submit Flag
+        </button>
+      </aside>
+    </div>
+
+    <div id="profileModal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2>User Profile</h2>
+          <button
+            class="modal-close-btn"
+            onclick="
+              document.getElementById('profileModal').style.display = 'none'
+            "
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <img
+            id="profileImage"
+            src=""
+            alt="Profile"
+            class="profile-pic"
+            style="display: none"
+          />
+          <div
+            id="profileInitial"
+            class="profile-initial"
+            style="display: none"
+          ></div>
+          <div id="profileName" class="profile-name"></div>
+          <div id="profileUsername" class="profile-username"></div>
+          <div id="profileBio" class="profile-bio"></div>
+          <div id="profileID" class="profile-id"></div>
+          <div
+            id="profileStatus"
+            class="profile-status"
+            style="display: none"
+          ></div>
+        </div>
+        <button
+          class="modal-footer-btn"
+          onclick="
+            document.getElementById('profileModal').style.display = 'none'
+          "
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Flag Modal -->
+    <div id="flagModal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2>Submit Your Flag</h2>
+          <button
+            class="modal-close-btn"
+            onclick="
+              document.getElementById('flagModal').style.display = 'none'
+            "
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <form
+            method="POST"
+            action="{{ url_for('level-5.submit_final_flag') }}"
+            style="width: 100%"
+          >
+            {% if error %}
+            <div
+              style="
+                background: #fee2e2;
+                color: #991b1b;
+                padding: 0.8rem;
+                border-radius: 6px;
+                margin-bottom: 1rem;
+                font-size: 0.85rem;
+              "
+            >
+              Incorrect flag! Try again.
+            </div>
+            {% endif %}
+            <input
+              type="text"
+              name="flag"
+              placeholder="FLAG(...)"
+              required
+              style="
+                width: 100%;
+                padding: 0.7rem;
+                border: 1px solid #d1d5db;
+                background: #fff;
+                color: #1f2937;
+                border-radius: 6px;
+                font-family: inherit;
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+              "
+            />
+            <button
+              type="submit"
+              style="
+                width: 100%;
+                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                border: none;
+                color: #fff;
+                padding: 0.7rem;
+                border-radius: 6px;
+                font-weight: 700;
+                cursor: pointer;
+                font-family: inherit;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-size: 0.85rem;
+              "
+            >
+              Submit Flag
+            </button>
+          </form>
         </div>
       </div>
-
-      <div id="users-feed"></div>
     </div>
 
-    <aside class="boss-right-sidebar">
-      <div class="right-sidebar-card">
-        <h3>📊 Active Users</h3>
-        <p id="user-count-display">0</p>
-      </div>
-      <div class="right-sidebar-card">
-        <h3>🎯 Your Task</h3>
-        <ul style="font-size: 0.78rem; line-height: 1.4; margin: 0; padding-left: 0; list-style: none">
-          <li>✓ Explore profiles</li>
-          <li>✓ Find the admin</li>
-          <li>✓ Discover the flag</li>
-          <li>✓ Submit and win</li>
-        </ul>
-      </div>
-      <button class="submit-flag-btn" onclick="document.getElementById('flagModal').style.display='flex'">
-        Submit Flag
-      </button>
-    </aside>
-  </div>
+    <script>
+      // Fetch and display users as Facebook posts
+      async function loadUsersPosts() {
+        try {
+          const response = await fetch("/level-5/users");
+          const users = await response.json();
+          const feed = document.getElementById("users-feed");
 
-  <div id="profileModal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h2>User Profile</h2>
-        <button class="modal-close-btn" onclick="document.getElementById('profileModal').style.display='none'">×</button>
-      </div>
-      <div class="modal-body">
-        <img id="profileImage" src="" alt="Profile" class="profile-pic" style="display: none;">
-        <div id="profileInitial" class="profile-initial" style="display: none;"></div>
-        <div id="profileName" class="profile-name"></div>
-        <div id="profileUsername" class="profile-username"></div>
-        <div id="profileBio" class="profile-bio"></div>
-        <div id="profileID" class="profile-id"></div>
-        <div id="profileStatus" class="profile-status" style="display: none;"></div>
-      </div>
-      <button class="modal-footer-btn" onclick="document.getElementById('profileModal').style.display='none'">Close</button>
-    </div>
-  </div>
+          document.getElementById("user-count-display").textContent =
+            users.length;
 
-  <!-- Flag Modal -->
-  <div id="flagModal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h2>Submit Your Flag</h2>
-        <button class="modal-close-btn" onclick="document.getElementById('flagModal').style.display='none'">×</button>
-      </div>
-      <div class="modal-body">
-        <form method="POST" action="{{ url_for('level-5.submit_final_flag') }}" style="width: 100%;">
-          {% if error %}
-          <div style="background: #fee2e2; color: #991b1b; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.85rem;">Incorrect flag! Try again.</div>
-          {% endif %}
-          <input type="text" name="flag" placeholder="CTF(...)" required style="width: 100%; padding: 0.7rem; border: 1px solid #d1d5db; background: #fff; color: #1f2937; border-radius: 6px; font-family: inherit; font-size: 0.9rem; margin-bottom: 0.8rem;" />
-          <button type="submit" style="width: 100%; background: linear-gradient(135deg, #3b82f6, #2563eb); border: none; color: #fff; padding: 0.7rem; border-radius: 6px; font-weight: 700; cursor: pointer; font-family: inherit; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Submit Flag</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Fetch and display users as Facebook posts
-    async function loadUsersPosts() {
-      try {
-        const response = await fetch('/level-5/users');
-        const users = await response.json();
-        const feed = document.getElementById('users-feed');
-        
-        document.getElementById('user-count-display').textContent = users.length;
-
-        users.forEach(user => {
-          const post = document.createElement('div');
-          post.className = 'fb-post user-post';
-          post.innerHTML = `
+          users.forEach((user) => {
+            const post = document.createElement("div");
+            post.className = "fb-post user-post";
+            post.innerHTML = `
             <div class="fb-post-header">
               <img src="${user.image}" alt="${user.name}" class="fb-post-avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
               <div class="fb-post-avatar" style="display:none">${user.name.charAt(0)}</div>
@@ -142,100 +247,103 @@
             </div>
             <button class="fb-btn-view" data-user-id="${user.id}" data-user-name="${user.name}" data-user-username="${user.username}" data-user-bio="${user.bio}" data-user-admin="${user.isAdmin}" data-user-image="${user.image}">View Full Profile</button>
           `;
-          
-          const btn = post.querySelector('.fb-btn-view');
-          btn.addEventListener('click', function() {
-            viewProfile(
-              parseInt(this.dataset.userId),
-              this.dataset.userName,
-              this.dataset.userUsername,
-              this.dataset.userBio,
-              this.dataset.userAdmin === 'true',
-              this.dataset.userImage
-            );
+
+            const btn = post.querySelector(".fb-btn-view");
+            btn.addEventListener("click", function () {
+              viewProfile(
+                parseInt(this.dataset.userId),
+                this.dataset.userName,
+                this.dataset.userUsername,
+                this.dataset.userBio,
+                this.dataset.userAdmin === "true",
+                this.dataset.userImage,
+              );
+            });
+
+            feed.appendChild(post);
           });
-          
-          feed.appendChild(post);
-        });
-      } catch (err) {
-        console.error('Error loading users:', err);
-      }
-    }
-
-    function viewProfile(userId, name, username, bio, isAdmin, profileImage) {
-      // Close flag modal if open
-      document.getElementById('flagModal').style.display = 'none';
-      
-      // Clear previous state
-      const img = document.getElementById('profileImage');
-      const initial = document.getElementById('profileInitial');
-      
-      img.style.display = 'none';
-      initial.style.display = 'none';
-      
-      // Set text content first
-      document.getElementById('profileName').textContent = name;
-      document.getElementById('profileUsername').textContent = '@' + username;
-      document.getElementById('profileBio').textContent = bio;
-      document.getElementById('profileID').textContent = 'ID: ' + userId;
-      document.getElementById('profileStatus').innerHTML = '';
-      
-      // Handle image loading
-      img.src = '';  // Reset
-      
-      const imgTest = new Image();
-      imgTest.onload = function() {
-        img.src = profileImage;
-        img.style.display = 'block';
-        initial.style.display = 'none';
-      };
-      imgTest.onerror = function() {
-        img.style.display = 'none';
-        initial.style.display = 'flex';
-        initial.textContent = name.charAt(0).toUpperCase();
-      };
-      imgTest.src = profileImage;
-      
-      // Show modal
-      document.getElementById('profileModal').style.display = 'flex';
-    }
-
-    function closeProfileModal() {
-      document.getElementById('profileModal').style.display = 'none';
-    }
-
-    // Load users on page load
-    window.addEventListener('load', loadUsersPosts);
-
-    function handlePageTransition(href) {
-      const transition = document.querySelector('.page-transition');
-      transition.classList.remove('end');
-      transition.classList.add('start');
-      
-      setTimeout(() => {
-        window.location.href = href;
-      }, 500);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const transition = document.querySelector('.page-transition');
-      if (transition) {
-        setTimeout(() => {
-          transition.classList.add('end');
-        }, 50);
-      }
-
-      document.querySelectorAll('a').forEach(link => {
-        if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
-          link.addEventListener('click', function(e) {
-            if (!this.href.includes('#')) {
-              e.preventDefault();
-              handlePageTransition(this.href);
-            }
-          });
+        } catch (err) {
+          console.error("Error loading users:", err);
         }
+      }
+
+      function viewProfile(userId, name, username, bio, isAdmin, profileImage) {
+        // Close flag modal if open
+        document.getElementById("flagModal").style.display = "none";
+
+        // Clear previous state
+        const img = document.getElementById("profileImage");
+        const initial = document.getElementById("profileInitial");
+
+        img.style.display = "none";
+        initial.style.display = "none";
+
+        // Set text content first
+        document.getElementById("profileName").textContent = name;
+        document.getElementById("profileUsername").textContent = "@" + username;
+        document.getElementById("profileBio").textContent = bio;
+        document.getElementById("profileID").textContent = "ID: " + userId;
+        document.getElementById("profileStatus").innerHTML = "";
+
+        // Handle image loading
+        img.src = ""; // Reset
+
+        const imgTest = new Image();
+        imgTest.onload = function () {
+          img.src = profileImage;
+          img.style.display = "block";
+          initial.style.display = "none";
+        };
+        imgTest.onerror = function () {
+          img.style.display = "none";
+          initial.style.display = "flex";
+          initial.textContent = name.charAt(0).toUpperCase();
+        };
+        imgTest.src = profileImage;
+
+        // Show modal
+        document.getElementById("profileModal").style.display = "flex";
+      }
+
+      function closeProfileModal() {
+        document.getElementById("profileModal").style.display = "none";
+      }
+
+      // Load users on page load
+      window.addEventListener("load", loadUsersPosts);
+
+      function handlePageTransition(href) {
+        const transition = document.querySelector(".page-transition");
+        transition.classList.remove("end");
+        transition.classList.add("start");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const transition = document.querySelector(".page-transition");
+        if (transition) {
+          setTimeout(() => {
+            transition.classList.add("end");
+          }, 50);
+        }
+
+        document.querySelectorAll("a").forEach((link) => {
+          if (
+            !link.href.startsWith("http") ||
+            link.href.includes(window.location.hostname)
+          ) {
+            link.addEventListener("click", function (e) {
+              if (!this.href.includes("#")) {
+                e.preventDefault();
+                handlePageTransition(this.href);
+              }
+            });
+          }
+        });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

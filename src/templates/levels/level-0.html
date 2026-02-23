@@ -1,114 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Level 0</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}" />
-</head>
-<body>
-  <!-- Page Transition Overlay -->
-  <div class="page-transition"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Level 0</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/default.css') }}"
+    />
+  </head>
+  <body>
+    <div class="page-transition"></div>
 
-<!--Congrats! You found me. The flag is "CTF(ilovehtml)" -->
+    <!--Congrats! You found me. The flag is "FLAG(ilovehtml)" -->
 
-<div class="level-page">
-  <header class="hero">
-    <h1 class="title">Level 0</h1>
-    <p class="subtitle">Inside the page • Learn the basics of DevTools</p>
-  </header>
+    <div class="level-page">
+      <header class="hero">
+        <h1 class="title">Level 0</h1>
+        <p class="subtitle">Inside the page • Learn the basics of DevTools</p>
+      </header>
 
-  <main class="level-grid">
-    <section class="level-card overview">
-      <h2>Mission</h2>
-      <p>
-        To start becoming a hacker, we first need to learn how to look at the
-        website’s internals.
-      </p>
-      <ol class="level-list">
-        <li>Open DevTools (Inspect) in your browser.</li>
-        <li>Search the page for the word <strong>flag</strong>.</li>
-        <li>Copy it and submit below.</li>
-      </ol>
-      <div class="level-tip">
-        Chrome: Press F12 or right‑click → Inspect
-        <span>•</span>
-        Firefox: Press F12 or right‑click → Inspect Element
-      </div>
-      <div class="level-ref-grid">
-        <div class="ref-card">
-          <h3>Where to look</h3>
-          <p>Elements tab • Search for text • Hidden comments</p>
-        </div>
-        <div class="ref-card">
-          <h3>Common flag format</h3>
-          <p><span class="code-pill">flag{example_text}</span></p>
-        </div>
-      </div>
-    </section>
+      <main class="level-grid">
+        <section class="level-card overview">
+          <h2>Mission</h2>
+          <p>
+            To start becoming a hacker, we first need to learn how to look at
+            the website’s internals.
+          </p>
+          <ol class="level-list">
+            <li>Open DevTools (Inspect) in your browser.</li>
+            <li>Search the page for the word <strong>flag</strong>.</li>
+            <li>Copy it and submit below.</li>
+          </ol>
+          <div class="level-tip">
+            Chrome: Press F12 or right‑click → Inspect
+            <span>•</span>
+            Firefox: Press F12 or right‑click → Inspect Element
+          </div>
+          <div class="level-ref-grid">
+            <div class="ref-card">
+              <h3>Where to look</h3>
+              <p>Elements tab • Search for text • Hidden comments</p>
+            </div>
+            <div class="ref-card">
+              <h3>Common flag format</h3>
+              <p><span class="code-pill">flag{example_text}</span></p>
+            </div>
+          </div>
+        </section>
 
-    <section class="level-card video">
-      <h2>Watch</h2>
-      <div class="video-embed">
-        <iframe
-          src="https://www.youtube.com/embed/r9bMGKET8xg"
-          title="Developer Tools Tutorial"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
-      </div>
-    </section>
+        <section class="level-card video">
+          <h2>Watch</h2>
+          <div class="video-embed">
+            <iframe
+              src="https://www.youtube.com/embed/r9bMGKET8xg"
+              title="Developer Tools Tutorial"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+              "
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+        </section>
 
-    <section class="level-card submit">
-      <h2>Submit the flag</h2>
-      <p class="submit-subtitle">Paste the exact flag text you found.</p>
-      {% if error %}
-      <div class="form-error">{{ error }}</div>
-      {% endif %}
-      <form method="POST" action="{{ url_for('level-0.submit_final_flag') }}">
-        <input type="text" name="flag" placeholder="flag{...}" required />
-        <button type="submit">Submit flag</button>
-      </form>
-      <div class="submit-help">
-        Tip: Keep your flags saved — they unlock future levels.
-      </div>
-    </section>
-  </main>
+        <section class="level-card submit">
+          <h2>Submit the flag</h2>
+          <p class="submit-subtitle">Paste the exact flag text you found.</p>
+          {% if error %}
+          <div class="form-error">{{ error }}</div>
+          {% endif %}
+          <form
+            method="POST"
+            action="{{ url_for('level-0.submit_final_flag') }}"
+          >
+            <input type="text" name="flag" placeholder="flag{...}" required />
+            <button type="submit">Submit flag</button>
+          </form>
+          <div class="submit-help">
+            Tip: Keep your flags saved — they unlock future levels.
+          </div>
+        </section>
+      </main>
 
-  <div class="level-footer-glow"></div>
-</div>
+      <div class="level-footer-glow"></div>
+    </div>
 
-  <script>
-    function handlePageTransition(href) {
-      const transition = document.querySelector('.page-transition');
-      transition.classList.remove('end');
-      transition.classList.add('start');
-      
-      setTimeout(() => {
-        window.location.href = href;
-      }, 500);
-    }
+    <script>
+      function handlePageTransition(href) {
+        const transition = document.querySelector(".page-transition");
+        transition.classList.remove("end");
+        transition.classList.add("start");
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const transition = document.querySelector('.page-transition');
-      if (transition) {
         setTimeout(() => {
-          transition.classList.add('end');
-        }, 50);
+          window.location.href = href;
+        }, 500);
       }
 
-      document.querySelectorAll('a').forEach(link => {
-        if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
-          link.addEventListener('click', function(e) {
-            if (!this.href.includes('#')) {
-              e.preventDefault();
-              handlePageTransition(this.href);
-            }
-          });
+      document.addEventListener("DOMContentLoaded", function () {
+        const transition = document.querySelector(".page-transition");
+        if (transition) {
+          setTimeout(() => {
+            transition.classList.add("end");
+          }, 50);
         }
+
+        document.querySelectorAll("a").forEach((link) => {
+          if (
+            !link.href.startsWith("http") ||
+            link.href.includes(window.location.hostname)
+          ) {
+            link.addEventListener("click", function (e) {
+              if (!this.href.includes("#")) {
+                e.preventDefault();
+                handlePageTransition(this.href);
+              }
+            });
+          }
+        });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
