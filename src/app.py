@@ -14,3 +14,5 @@ def build_app():
     
     #start_ssh_server_background('localhost', 2222, Path("./.ssh/keys") )
     return app
+
+app = build_app()
